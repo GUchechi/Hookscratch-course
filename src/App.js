@@ -1,30 +1,23 @@
-import React, {useReducer} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'INCREMENT' :
-      return {count: state.count + 1, showText: state.showText}
-      case "toggleShowText" :
-        return {count: state.count, showText: !state.showText}
-        default : 
-            return state
-  }
-};
+import Axios from 'axios'
 
 function App() {
-  const [state, dispatch] = useReducer(reducer,
-     {count : 1, showText : true});
+  const [url, setUrl] = useState('');
 
+  useEffect(() => {
+    Axios.get('http://aws.random.cat/meow').then((url) => {
+      setUrl(url.data['file']);
+    })
+}, [])
+
+
+  
   return (
     <div className="App"> 
-    <h1>{state.count}</h1>    
-      <button
-      onClick={ () => {
-        dispatch({type: 'INCREMENT'});
-        dispatch({type: 'toggleShowText'});
-      }}>Click here</button>
-      {state.showText && <p>This is a text</p>}
+      {url !== '' && (
+        <img src={url} alt={'first-api'} />
+      )}
     </div>
   );
 }
