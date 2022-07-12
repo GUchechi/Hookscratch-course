@@ -1,25 +1,22 @@
-import React, {useState, useEffect} from 'react';
+import React, {useRef} from 'react';
 import './App.css';
-import Axios from 'axios'
+import axios from 'axios';
+
 
 function App() {
-  const [url, setUrl] = useState('');
+  const inputRef = useRef(null);
 
-  useEffect(() => {
-    Axios.get('http://aws.random.cat/meow').then((url) => {
-      setUrl(url.data['file']);
-    })
-}, [])
-
-
-  
+  const onClick = () => {
+    inputRef.current.value = "";
+  };
+ 
   return (
     <div className="App"> 
-      {url !== '' && (
-        <img src={url} alt={'first-api'} />
-      )}
+      <h1>Uche</h1>
+      <input type="text" placeholder='Ex...' ref={inputRef} />
+      <button onClick={onClick}>Change Name</button>
     </div>
   );
-}
+};
 
 export default App;
