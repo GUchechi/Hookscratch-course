@@ -1,20 +1,20 @@
-import React,{ useRef } from 'react';
+import React,{ createContext, useState } from 'react';
 import './App.css';
+import Login from './Login';
+import User from './User';
 
 
+export const AppContext = createContext(null);
 function App() {
- const inputRef = useRef(null);
- const onClick = () => {
-    inputRef.current.value = '';
- }
-  
+  const [username, setUsername] = useState("");
+
+ 
   return (
-    <div className="App"> 
-    <h1>Pedro</h1>
-    <input type="text" placeholder='Ex... ' ref={inputRef}/>
-    <button onClick={onClick}>Change Name</button>
-    </div>
+    <AppContext.Provider value={{username,setUsername}} className="App"> 
+      <Login />
+      <User />
+    </AppContext.Provider>
   );
 };
 
-export default App; 
+export default App;  
